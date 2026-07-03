@@ -65,7 +65,7 @@ const AccountModule = (() => {
                     <input type="text" id="lookup-key-input" placeholder="ddns_..." style="width:100%">
                 </div>
                 <div id="lookup-key-result" style="margin-top:var(--sp-4)"></div>
-                <div style="display:flex; gap:var(--sp-3); margin-top:var(--sp-5)">
+                <div style="margin-top:var(--sp-5)">
                     <button class="action-btn btn-ghost" id="lookup-key-cancel" style="flex:1">Fechar</button>
                     <button class="action-btn btn-primary" id="lookup-key-submit" style="flex:1">Consultar</button>
                 </div>
@@ -103,9 +103,11 @@ const AccountModule = (() => {
             resultEl.innerHTML = `
                 <div class="sub-item" style="cursor:default">
                     <div class="sub-info">
-                        <span class="sub-fqdn">${Utils.esc(found.fqdn)}</span>
-                        <span class="sub-meta">
+                        <div class="sub-fqdn-group">
+                            <span class="sub-fqdn">${Utils.esc(found.fqdn)}</span>
                             <span class="status-dot ${found.lastIp ? 'has-ip' : 'no-ip'}"></span>
+                        </div>
+                        <span class="sub-meta">
                             IP atual: ${Utils.esc(found.lastIp || '— ainda não atualizado')}
                         </span>
                         <span class="sub-meta">Última atualização: ${Utils.formatDateTime(found.lastUpdateAt)}</span>

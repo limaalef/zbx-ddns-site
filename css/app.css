@@ -223,7 +223,7 @@ label {
     white-space: nowrap;
 }
 
-.hint { font-size: var(--font-size-xs); color: var(--text-tertiary); margin-top: var(--sp-2); }
+.hint { font-size: var(--font-size-mds); color: var(--text-tertiary); margin-top: var(--sp-2); }
 
 /* ============ LISTA DE SUBDOMÍNIOS ============ */
 .sub-list {
@@ -251,7 +251,7 @@ label {
 }
 .sub-item .sub-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .sub-item .sub-fqdn { font-weight: 700; font-size: var(--font-size-md); font-family: monospace; word-break: break-all; }
-.sub-item .sub-meta { font-size: var(--font-size-sm); color: var(--text-primary); }
+.sub-item .sub-meta { font-size: var(--font-size-sm); color: var(--text-primary); letter-spacing: -0.02rem; font-weight: 500; }
 .sub-item .sub-actions { display: flex; gap: var(--sp-2); flex-shrink: 0; }
 
 .status-dot {
@@ -287,10 +287,11 @@ label {
     border-bottom: 1px solid var(--code-border);
 }
 .code-block .code-label {
-    color: var(--text-tertiary);
+    color: var(--text-primary);
     font-size: var(--font-size-xs);
     text-transform: uppercase;
     letter-spacing: .04em;
+    font-weight: 700;
 }
 .code-block pre {
     margin: 0;

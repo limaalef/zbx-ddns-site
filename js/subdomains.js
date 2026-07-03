@@ -109,10 +109,12 @@ const SubdomainsModule = (() => {
         listEl.innerHTML = _cache.map(s => `
             <li class="sub-item ${s.id === _selectedId ? 'selected' : ''}" data-id="${s.id}">
                 <div class="sub-info">
-                    <span class="sub-fqdn">${Utils.esc(s.fqdn)}</span>
-                    <span class="sub-meta">
+                    <div class="sub-fqdn-group">
                         <span class="status-dot ${s.lastIp ? 'has-ip' : 'no-ip'}"></span>
-                        ${s.lastIp ? Utils.esc(s.lastIp) : 'Aguardando primeira atualização'}
+                        <span class="sub-fqdn">${Utils.esc(s.fqdn)}</span>
+                    </div>
+                    <span class="sub-meta">
+                        ${s.lastIp ? Utils.esc(s.lastIp) : 'Aguardando atualização'}
                         ${s.lastUpdateAt ? ' · ' + Utils.formatDateTime(s.lastUpdateAt) : ''}
                     </span>
                 </div>
@@ -168,7 +170,7 @@ const SubdomainsModule = (() => {
                 <p>Essa chave só permite atualizar o IP deste subdomínio via <code>PUT /update-ip</code>.
                    Não compartilhe — cole-a apenas no script do passo 2.</p>
                 <div class="key-display" id="key-display-value">${Utils.esc(sub.apiKey)}</div>
-                <div style="display:flex; gap:var(--sp-3); margin-top:var(--sp-5)">
+                <div style="margin-top:var(--sp-5)">
                     <button class="action-btn btn-ghost" style="flex:1" id="key-modal-close">Fechar</button>
                     <button class="action-btn btn-primary" style="flex:1" id="key-modal-copy">Copiar chave</button>
                 </div>

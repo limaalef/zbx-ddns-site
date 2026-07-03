@@ -1,0 +1,158 @@
+/* ========================================
+   VARIÁVEIS DE TEMA - LIGHT MODE
+   (adaptado do design system do limaalef.com)
+   ======================================== */
+:root {
+    /* Backgrounds */
+    --bg-primary: #f5f4f0;
+    --bg-secondary: #eeece7;
+    --bg-tertiary: #dadbdd;
+
+    /* Textos */
+    --text-primary: #1a1a18;
+    --text-secondary: #2e2e2c;
+    --text-tertiary: #a0a09a;
+
+    /* Cores de Interface */
+    --header-color: var(--bg-primary);
+    --border-color: #d8d6d0;
+
+    --accent-color: #d40000;
+    --accent-color-rgb: 59, 130, 246;
+    --accent-hover: #e95858;
+    --bg-accent-color: #f7c9c9;
+    --text-accent-color: #ffffff;
+
+    /* Cores de Status */
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --info-color: #3b82f6;
+
+    --bg-success: #d1fae5;
+    --bg-warning: #fef3c7;
+    --bg-info: #c7dafe;
+    --bg-error: #fee2e2;
+
+    --text-success: #065f46;
+    --text-warning: #92400e;
+    --text-info: #0e2692;
+    --text-error: #991b1b;
+
+    /* Code blocks */
+    --code-bg: #1e1e1e;
+    --code-text: #e8e8e8;
+    --code-border: #333333;
+    --code-comment: #6a9955;
+    --code-string: #ce9178;
+    --code-key: #9cdcfe;
+
+    /* Max sizes */
+    --page-width-size: 980px;
+
+    /* Font sizes */
+    --font-size-xs: 0.675rem;
+    --font-size-mds: 0.735rem;
+    --font-size-sm: 0.79rem;
+    --font-size-mdm: 0.85rem;
+    --font-size-md: 0.925rem;
+    --font-size-lg: 1.05rem;
+    --font-size-xl: 1.175rem;
+    --font-size-xxl: 1.275rem;
+    --font-size-mxxl: 1.8rem;
+    --font-size-xxxl: 2.05rem;
+
+    /* Border sizes */
+    --border-radius-size-xs: 0.25rem;
+    --border-radius-size-sm: 0.375rem;
+    --border-radius-size-md: 0.5rem;
+    --border-radius-size-mlg: 0.625rem;
+    --border-radius-size-lg: 0.75rem;
+    --border-radius-size-xl: 1rem;
+    --border-radius-size-circle: 15rem;
+
+    --logo-size: 42px;
+
+    /* Espaçamentos */
+    --sp-1: 0.25rem;
+    --sp-2: 0.375rem;
+    --sp-3: 0.5rem;
+    --sp-4: 0.75rem;
+    --sp-5: 1rem;
+    --sp-6: 1.25rem;
+    --sp-7: 1.5rem;
+    --sp-8: 2rem;
+    --sp-9: 2.5rem;
+
+    @media (max-width: 720px) {
+        --font-size-xs: 0.65rem;
+        --font-size-mds: 0.7rem;
+        --font-size-sm: 0.75rem;
+        --font-size-mdm: 0.825rem;
+        --font-size-md: 0.875rem;
+        --font-size-lg: 1rem;
+        --font-size-xl: 1.125rem;
+        --font-size-xxl: 1.25rem;
+        --font-size-mxxl: 1.75rem;
+        --font-size-xxxl: 2rem;
+
+        --sp-7: 1.25rem;
+        --sp-8: 1.75rem;
+        --sp-9: 2.25rem;
+    }
+
+    @media (max-width: 496px) {
+        --font-size-xs: 0.6rem;
+        --font-size-mds: 0.65rem;
+        --font-size-sm: 0.7rem;
+        --font-size-mdm: 0.75rem;
+        --font-size-md: 0.85rem;
+        --font-size-lg: 0.95rem;
+        --font-size-xl: 1.1rem;
+        --font-size-xxl: 1.2rem;
+        --font-size-mxxl: 1.7rem;
+        --font-size-xxxl: 1.9rem;
+
+        --sp-5: 0.75rem;
+        --sp-6: 1rem;
+        --sp-7: 1.25rem;
+        --sp-8: 1.5rem;
+        --sp-9: 2rem;
+    }
+}
+
+/* DARK MODE — segue o tema do sistema operacional/navegador */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Backgrounds */
+        --bg-primary: #131313;
+        --bg-secondary: #1a1a1a;
+        --bg-tertiary: #363636;
+
+        /* Textos */
+        --text-primary: #e8e8e8;
+        --text-secondary: #aaaaaa;
+        --text-tertiary: #757575;
+
+        /* Interface */
+        --border-color: #333333;
+
+        --bg-accent-color: #4b0404;
+        --text-accent-color: #ffffff;
+
+        /* Cores de Status */
+        --bg-success: #053f30;
+        --bg-warning: #451a03;
+        --bg-info: #081758;
+        --bg-error: #450a0a;
+
+        --text-success: #6ee7b7;
+        --text-warning: #fcd34d;
+        --text-info: #a2a8ff;
+        --text-error: #fca5a5;
+
+        /* Code blocks */
+        --code-bg: #0d0d0d;
+        --code-border: #2a2a2a;
+    }
+}

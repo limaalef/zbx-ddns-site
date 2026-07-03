@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DDNS Subdomain Manager</title>
+<meta name="description" content="Registre um subdomínio e configure um DDNS simples que mantém seu IP sempre atualizado.">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div class="page">
+
+    <!-- ============ TOPO: título e descrição ============ -->
+    <header class="hero">
+        <h1>Zabbix Proxy DDNS</h1>
+        <p>Registre um subdomínio gratuito e configure em seu proxy Zabbix para que ele continue
+           se comunicando com sua infraestrutura mesmo em ambientes com IP dinâmico.</p>
+    </header>
+
+    <!-- ============ BARRA DE CONTA: login / consulta / exclusão ============ -->
+    <section class="account-bar" id="account-bar">
+        <!-- Preenchido via JS (account.js) -->
+    </section>
+
+    <!-- ============ PASSO A PASSO ============ -->
+    <main class="steps">
+
+        <!-- PASSO 1 — Registrar subdomínio -->
+        <section class="step" id="step-1">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <div>
+                    <div class="step-title">Registre seu subdomínio</div>
+                </div>
+            </div>
+            <div class="step-body">
+
+                <div class="form-row" id="register-form-row">
+                    <div class="form-field" style="flex:2 1 280px">
+                        <label for="subdomain-label">Nome do subdomínio</label>
+                        <div class="domain-suffix">
+                            <input type="text" id="subdomain-label" placeholder="meuservidor" autocomplete="off">
+                            <span id="domain-suffix-label">.seudominio.com</span>
+                        </div>
+                        <p class="hint">Use apenas letras minúsculas, números e hífen.</p>
+                    </div>
+                    <button class="action-btn btn-primary" id="register-btn">Registrar</button>
+                </div>
+
+                <div>
+                    <label style="margin-top:var(--sp-2)">Seus subdomínios</label>
+                    <ul class="sub-list" id="sub-list">
+                        <li class="empty-state">Faça login para ver seus subdomínios registrados.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PASSO 2 — Script de atualização -->
+        <section class="step" id="step-2">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <div>
+                    <div class="step-title">Script de atualização de IP</div>
+                    <div class="step-desc">Esse script roda no seu servidor e mantém o registro DNS atualizado.</div>
+                </div>
+            </div>
+            <div class="step-body">
+                <p class="hint" id="step2-hint">Selecione um subdomínio na lista acima para gerar o script com seus dados.</p>
+
+                <div class="code-block">
+                    <div class="code-toolbar">
+                        <span class="code-label">ddns_update.sh</span>
+                        <button class="copy-btn" id="copy-script-btn">Copiar</button>
+                    </div>
+                    <pre><code id="script-code"></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- PASSO 3 — Configuração no Linux -->
+        <section class="step" id="step-3">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <div>
+                    <div class="step-title">Configurando no Linux</div>
+                    <div class="step-desc">Passo a passo para instalar, agendar e manter o script funcionando.</div>
+                </div>
+            </div>
+            <div class="step-body">
+                <div class="substeps">
+
+                    <div class="substep">
+                        <h4>3.1 Criar a pasta e salvar o script</h4>
+                        <p>Crie um diretório dedicado e salve o script do passo anterior nele:</p>
+                        <div class="code-block">
+                            <div class="code-toolbar">
+                                <span class="code-label">bash</span>
+                                <button class="copy-btn" data-copy-target="cmd-folder">Copiar</button>
+                            </div>
+                            <pre><code id="cmd-folder"></code></pre>
+                        </div>
+                    </div>
+
+                    <div class="substep">
+                        <h4>3.2 Ajustar permissões</h4>
+                        <p>Garanta que apenas o seu usuário possa ler e executar o script (ele contém sua chave de acesso):</p>
+                        <div class="code-block">
+                            <div class="code-toolbar">
+                                <span class="code-label">bash</span>
+                                <button class="copy-btn" data-copy-target="cmd-perms">Copiar</button>
+                            </div>
+                            <pre><code id="cmd-perms"></code></pre>
+                        </div>
+                    </div>
+
+                    <div class="substep">
+                        <h4>3.3 Testar manualmente</h4>
+                        <p>Execute uma vez para confirmar que está tudo certo antes de agendar:</p>
+                        <div class="code-block">
+                            <div class="code-toolbar">
+                                <span class="code-label">bash</span>
+                                <button class="copy-btn" data-copy-target="cmd-test">Copiar</button>
+                            </div>
+                            <pre><code id="cmd-test"></code></pre>
+                        </div>
+                    </div>
+
+                    <div class="substep">
+                        <h4>3.4 Configurar o cron</h4>
+                        <p>Agende a execução periódica (a cada 5 minutos). O rate limit do servidor permite
+                           até 5 execuções na primeira hora e depois 1 a cada 15 minutos, então um
+                           intervalo de 5 em 5 minutos é seguro mesmo que o IP não mude:</p>
+                        <div class="code-block">
+                            <div class="code-toolbar">
+                                <span class="code-label">crontab -e</span>
+                                <button class="copy-btn" data-copy-target="cmd-cron">Copiar</button>
+                            </div>
+                            <pre><code id="cmd-cron"></code></pre>
+                        </div>
+                    </div>
+
+                    <div class="substep">
+                        <h4>3.5 Verificar o log</h4>
+                        <p>O script registra apenas erros e mudanças de IP (log enxuto), para acompanhar:</p>
+                        <div class="code-block">
+                            <div class="code-toolbar">
+                                <span class="code-label">bash</span>
+                                <button class="copy-btn" data-copy-target="cmd-log">Copiar</button>
+                            </div>
+                            <pre><code id="cmd-log"></code></pre>
+                        </div>
+                    </div>
+
+                    <div class="substep">
+                        <h4>3.6 Remover (desinstalar)</h4>
+                        <p>Para parar de atualizar e remover os arquivos locais (isso não exclui o
+                           subdomínio nem o registro DNS — para isso, use o botão de exclusão na lista acima):</p>
+                        <div class="code-block">
+                            <div class="code-toolbar">
+                                <span class="code-label">bash</span>
+                                <button class="copy-btn" data-copy-target="cmd-uninstall">Copiar</button>
+                            </div>
+                            <pre><code id="cmd-uninstall"></code></pre>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer style="text-align:center; padding: var(--sp-8) 0 var(--sp-4); color: var(--text-tertiary); font-size: var(--font-size-xs)">
+        DDNS Subdomain Manager
+    </footer>
+</div>
+
+<!-- Modais utilitários (consulta de chave, IP, exclusão) injetados via account.js -->
+
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/account.js"></script>
+<script src="js/subdomains.js"></script>
+<script src="js/script-builder.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

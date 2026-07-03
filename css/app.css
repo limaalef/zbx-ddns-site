@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -138,10 +140,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent-color); }
 
 label {
     display: block;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-mds);
+    text-transform: uppercase;
     color: var(--text-secondary);
     margin-bottom: var(--sp-2);
     font-weight: 600;
+    letter-spacing: 0.06rem;
 }
 
 /* ============ PASSOS ============ */
@@ -167,11 +171,14 @@ label {
 
 .step-number {
     flex: 0 0 auto;
-    width: 36px; height: 36px;
-    border-radius: 50%;
+    width: 42px;
+    height: 64px;
+    border-radius: var(--border-radius-size-xl) 0 var(--border-radius-size-xl) 0;
     background: var(--accent-color);
     color: var(--text-accent-color);
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 800;
     font-size: var(--font-size-lg);
 }
@@ -179,7 +186,12 @@ label {
 .step-title { font-size: var(--font-size-xl); font-weight: 700; }
 .step-desc { color: var(--text-secondary); font-size: var(--font-size-sm); margin-top: 2px; }
 
-.step-body { display: flex; flex-direction: column; gap: var(--sp-5); }
+.step-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+    padding: 0 var(--sp-5) var(--sp-5);
+}
 
 /* ============ CARD DE FORM / REGISTRO ============ */
 .form-row {

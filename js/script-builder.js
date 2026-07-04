@@ -5,7 +5,7 @@
 // ============================================================
 const ScriptBuilderModule = (() => {
 
-    const INSTALL_DIR = '/etc/ddns-client';
+    const INSTALL_DIR = '/etc/zbx-ddns-client';
     const SCRIPT_NAME = 'ddns_update.sh';
     const LOG_FILE    = `${INSTALL_DIR}/update.log`;
 
@@ -60,12 +60,11 @@ rm -f "$BODY_FILE"
 
     function buildFolderCommands(sub) {
         return `sudo mkdir -p ${INSTALL_DIR}
-sudo nano ${INSTALL_DIR}/${SCRIPT_NAME}
-# Cole o conteúdo do script do passo 2, salve e saia (Ctrl+O, Enter, Ctrl+X)`;
+sudo nano ${INSTALL_DIR}/${SCRIPT_NAME}`;
     }
 
     function buildPermsCommands() {
-        return `sudo chown "$USER":"$USER" ${INSTALL_DIR}/${SCRIPT_NAME}
+        return `sudo chown USER:USER ${INSTALL_DIR}/${SCRIPT_NAME}
 sudo chmod 700 ${INSTALL_DIR}/${SCRIPT_NAME}
 sudo chmod 700 ${INSTALL_DIR}`;
     }

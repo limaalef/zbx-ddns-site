@@ -3,99 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DDNS Subdomain Manager</title>
-<meta name="description" content="Registre um subdomínio e configure um DDNS simples que mantém seu IP sempre atualizado.">
+<title>Zabbix Proxy DDNS</title>
+<meta name="description" content="Um endereço pro seu proxy não deixar de se comunicar com seu ambiente Zabbix.">
 <link rel="stylesheet" href="css/theme.css">
 <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 
 <div class="page">
-
-    <!-- ============ TOPO: título e descrição ============ -->
     <header class="hero">
         <h1>Zabbix Proxy DDNS</h1>
-        <p>Registre um subdomínio gratuito e configure em seu proxy Zabbix para que ele continue
-           se comunicando com sua infraestrutura mesmo em ambientes com IP dinâmico.</p>
+        <p>Um endereço pro seu proxy não deixar de se comunicar com seu ambiente Zabbix.</p>
     </header>
 
-    <!-- ============ BARRA DE CONTA: login / consulta / exclusão ============ -->
-    <section class="account-bar" id="account-bar">
-        <!-- Preenchido via JS (account.js) -->
+    <section class="account-section">         
+        <div class="account-bar" id="account-bar"></div>
+        <div class="subdomain-group" id="subdomain-group">
+            <label style="margin-top:var(--sp-3)">Seus subdomínios</label>
+            <ul class="sub-list" id="sub-list">
+                <li class="empty-state">Faça login para ver seus subdomínios registrados.</li>
+            </ul>
+        </div>
     </section>
 
-    <!-- ============ PASSO A PASSO ============ -->
     <main class="steps">
-
-        <!-- PASSO 1 — Registrar subdomínio -->
         <section class="step" id="step-1">
             <div class="step-header">
-                <div class="step-number">1</div>
+                <div class="step-number">Passo 1</div>
                 <div>
                     <div class="step-title">Registre seu subdomínio</div>
                 </div>
             </div>
             <div class="step-body">
-
                 <div class="form-row" id="register-form-row">
                     <div class="form-field" style="flex:2 1 280px">
                         <label for="subdomain-label">Nome do subdomínio</label>
-                        <div class="domain-suffix">
-                            <input type="text" id="subdomain-label" placeholder="meuservidor" autocomplete="off">
-                            <span id="domain-suffix-label">.seudominio.com</span>
+                        <div class="domain-suffix domain-suffix-inline" id="domain-suffix-wrap">
+                            <input type="text" id="subdomain-label" placeholder="meu-servidor" autocomplete="off" spellcheck="false">
+                            <span id="domain-suffix-label" aria-hidden="true"></span>
+                            <span id="subdomain-label-mirror" class="input-mirror" aria-hidden="true"></span>
                         </div>
                         <p class="hint">Use apenas letras minúsculas, números e hífen.</p>
                     </div>
                     <button class="action-btn btn-primary" id="register-btn">Registrar</button>
                 </div>
-
-                <div>
-                    <label style="margin-top:var(--sp-2)">Seus subdomínios</label>
-                    <ul class="sub-list" id="sub-list">
-                        <li class="empty-state">Faça login para ver seus subdomínios registrados.</li>
-                    </ul>
-                </div>
-
             </div>
         </section>
 
-        <!-- PASSO 2 — Script de atualização -->
         <section class="step" id="step-2">
             <div class="step-header">
-                <div class="step-number">2</div>
-                <div>
-                    <div class="step-title">Script de atualização de IP</div>
-                    <div class="step-desc">Esse script roda no seu servidor e mantém o registro DNS atualizado.</div>
-                </div>
-            </div>
-            <div class="step-body">
-                <p class="hint" id="step2-hint">Selecione um subdomínio na lista acima para gerar o script com seus dados.</p>
-
-                <div class="code-block">
-                    <div class="code-toolbar">
-                        <span class="code-label">ddns_update.sh</span>
-                        <button class="copy-btn" id="copy-script-btn">Copiar</button>
-                    </div>
-                    <pre><code id="script-code"></code></pre>
-                </div>
-            </div>
-        </section>
-
-        <!-- PASSO 3 — Configuração no Linux -->
-        <section class="step" id="step-3">
-            <div class="step-header">
-                <div class="step-number">3</div>
+                <div class="step-number">Passo 2</div>
                 <div>
                     <div class="step-title">Configurando no Linux</div>
-                    <div class="step-desc">Passo a passo para instalar, agendar e manter o script funcionando.</div>
-                </div>
+                    </div>
             </div>
-            <div class="step-body">
+            <div>
                 <div class="substeps">
 
                     <div class="substep">
-                        <h4>3.1 Criar a pasta e salvar o script</h4>
-                        <p>Crie um diretório dedicado e salve o script do passo anterior nele:</p>
+                        <h4>2.1 Crie o diretório e o arquivo do script</h4>
                         <div class="code-block">
                             <div class="code-toolbar">
                                 <span class="code-label">bash</span>
@@ -106,8 +72,20 @@
                     </div>
 
                     <div class="substep">
-                        <h4>3.2 Ajustar permissões</h4>
-                        <p>Garanta que apenas o seu usuário possa ler e executar o script (ele contém sua chave de acesso):</p>
+                        <h4>2.2 Cole o código do script que realiza as verificações e atualizações</h4>
+                        <p class="hint" id="step2-hint">Selecione um subdomínio na lista acima para gerar o script com seus dados.</p>
+                        <div class="code-block">
+                            <div class="code-toolbar">
+                                <span class="code-label">ddns_update.sh</span>
+                                <button class="copy-btn" id="copy-script-btn">Copiar</button>
+                            </div>
+                            <pre><code id="script-code"></code></pre>
+                        </div>
+                    </div>
+
+                    <div class="substep">
+                        <h4>2.3 Ajuste as permissões</h4>
+                        <p>Altere USER pelo nome de usuário do seu ambiente para garantir a segurança das credencias contidas no script</p>
                         <div class="code-block">
                             <div class="code-toolbar">
                                 <span class="code-label">bash</span>
@@ -118,8 +96,8 @@
                     </div>
 
                     <div class="substep">
-                        <h4>3.3 Testar manualmente</h4>
-                        <p>Execute uma vez para confirmar que está tudo certo antes de agendar:</p>
+                        <h4>2.4 Teste a execução do script</h4>
+                        <p>Execute uma vez para confirmar que está tudo certo e verifique nesta página se o endereço IP foi identificado corretamente</p>
                         <div class="code-block">
                             <div class="code-toolbar">
                                 <span class="code-label">bash</span>
@@ -130,10 +108,8 @@
                     </div>
 
                     <div class="substep">
-                        <h4>3.4 Configurar o cron</h4>
-                        <p>Agende a execução periódica (a cada 5 minutos). O rate limit do servidor permite
-                           até 5 execuções na primeira hora e depois 1 a cada 15 minutos, então um
-                           intervalo de 5 em 5 minutos é seguro mesmo que o IP não mude:</p>
+                        <h4>2.5 Configure o cron</h4>
+                        <p>Realiza a execução periódica (a cada 5 minutos) do script. Este serviço possui um limite de 5 solicitações de alteração por hora, mas as verificações no servidor podem ser realizadas a cada 5 minutos</p>
                         <div class="code-block">
                             <div class="code-toolbar">
                                 <span class="code-label">crontab -e</span>
@@ -144,8 +120,8 @@
                     </div>
 
                     <div class="substep">
-                        <h4>3.5 Verificar o log</h4>
-                        <p>O script registra apenas erros e mudanças de IP (log enxuto), para acompanhar:</p>
+                        <h4>2.6 Verificação do log</h4>
+                        <p>A cada execução bem-sucedida ou não, um log é registrado a fim de facilitar a identificação de erros e problemas</p>
                         <div class="code-block">
                             <div class="code-toolbar">
                                 <span class="code-label">bash</span>
@@ -155,10 +131,22 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </section>
+
+        <section class="step" id="step-3">
+            <div class="step-header">
+                <div class="step-number">Passo 3</div>
+                <div>
+                    <div class="step-title">Desinstalação</div>
+                    </div>
+            </div>
+            <div>
+                <div class="substeps">
+
                     <div class="substep">
-                        <h4>3.6 Remover (desinstalar)</h4>
-                        <p>Para parar de atualizar e remover os arquivos locais (isso não exclui o
-                           subdomínio nem o registro DNS — para isso, use o botão de exclusão na lista acima):</p>
+                        <p>Remova o agendamento no cron e o diretório em que o script foi salvo</p>
                         <div class="code-block">
                             <div class="code-toolbar">
                                 <span class="code-label">bash</span>
@@ -171,15 +159,12 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <footer style="text-align:center; padding: var(--sp-8) 0 var(--sp-4); color: var(--text-tertiary); font-size: var(--font-size-xs)">
-        DDNS Subdomain Manager
+        Zabbix Proxy DDNS. Criado por @limaalef para todos que precisam de algo simples para fazer as coisas funcionarem direito
     </footer>
 </div>
-
-<!-- Modais utilitários (consulta de chave, IP, exclusão) injetados via account.js -->
 
 <script src="js/config.js"></script>
 <script src="js/utils.js"></script>

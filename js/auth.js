@@ -31,6 +31,7 @@ const AuthModule = (() => {
     function logout() {
         _saveSession(null);
         Utils.showNotification('Sessão encerrada', 'info');
+        document.getElementById('subdomain-group').style.display = 'none'
     }
 
     // ── Modal de login ──────────────────────────────────────

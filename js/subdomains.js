@@ -1,6 +1,14 @@
 // ============================================================
 //  SUBDOMAINS MODULE — registro, listagem, seleção, exclusão
 // ============================================================
+
+const ICONS = {
+    copy:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`,
+    eye:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path><circle cx="12" cy="12" r="3"></circle></svg>`,
+    rotate: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path><path d="M8 16H3v5"></path></svg>`,
+    trash:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`,
+};
+
 const SubdomainsModule = (() => {
 
     let _cache = [];
@@ -16,6 +24,34 @@ const SubdomainsModule = (() => {
     function initRegisterForm() {
         document.getElementById('domain-suffix-label').textContent = `-${CONFIG.BASE_DOMAIN}`;
 
+        const input = document.getElementById('subdomain-label');
+        const mirror = document.getElementById('subdomain-label-mirror');
+        const wrap = document.getElementById('domain-suffix-wrap');
+
+        const _syncMirrorFont = () => {
+            const cs = getComputedStyle(input);
+            ['fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'letterSpacing', 'textTransform']
+                .forEach(prop => { mirror.style[prop] = cs[prop]; });
+        };
+
+        const _resizeInput = () => {
+            mirror.textContent = input.value || input.placeholder || '';
+            const inputSize = Math.ceil(mirror.getBoundingClientRect().width);
+            input.style.width = `${inputSize}px`;
+        };
+
+        _syncMirrorFont();
+        input.addEventListener('input', _resizeInput);
+        wrap.addEventListener('click', () => input.focus());
+        _resizeInput();
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                _syncMirrorFont();
+                _resizeInput();
+            });
+        }
+
         document.getElementById('register-btn').addEventListener('click', async () => {
             if (!AuthModule.isLoggedIn()) {
                 AuthModule.openLoginModal(() => _doRegister());
@@ -24,7 +60,7 @@ const SubdomainsModule = (() => {
             await _doRegister();
         });
 
-        document.getElementById('subdomain-label').addEventListener('keydown', (e) => {
+        input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') document.getElementById('register-btn').click();
         });
     }
@@ -75,6 +111,7 @@ const SubdomainsModule = (() => {
         if (!AuthModule.isLoggedIn()) {
             _cache = [];
             listEl.innerHTML = `<li class="empty-state">Faça login para ver seus subdomínios registrados.</li>`;
+            document.getElementById('subdomain-group').style.display = 'none';
             _selectedId = null;
             _onSelectCallbacks.forEach(cb => cb(null));
             return;
@@ -101,6 +138,8 @@ const SubdomainsModule = (() => {
 
     function _renderList() {
         const listEl = document.getElementById('sub-list');
+        document.getElementById('subdomain-group').style.display = 'flex';
+
         if (_cache.length === 0) {
             listEl.innerHTML = `<li class="empty-state">Nenhum subdomínio registrado ainda.</li>`;
             return;
@@ -119,9 +158,10 @@ const SubdomainsModule = (() => {
                     </span>
                 </div>
                 <div class="sub-actions">
-                    <button class="action-btn btn-ghost btn-xs" data-action="view-key" title="Ver chave da API">Ver chave</button>
-                    <button class="action-btn btn-ghost btn-xs" data-action="rotate" title="Gerar nova chave">Renovar chave</button>
-                    <button class="action-btn btn-danger btn-xs" data-action="delete" title="Excluir subdomínio">Excluir</button>
+                    <button class="icon-btn btn-ghost" data-action="copy-fqdn" title="Copiar FQDN" aria-label="Copiar FQDN">${ICONS.copy}</button>
+                    <button class="icon-btn btn-ghost" data-action="view-key" title="Ver chave da API" aria-label="Ver chave da API">${ICONS.eye}</button>
+                    <button class="icon-btn btn-ghost" data-action="rotate" title="Gerar nova chave" aria-label="Gerar nova chave">${ICONS.rotate}</button>
+                    <button class="icon-btn btn-danger" data-action="delete" title="Excluir subdomínio" aria-label="Excluir subdomínio">${ICONS.trash}</button>
                 </div>
             </li>
         `).join('');
@@ -131,6 +171,11 @@ const SubdomainsModule = (() => {
             item.addEventListener('click', (e) => {
                 if (e.target.closest('[data-action]')) return;
                 selectSubdomain(id);
+            });
+            item.querySelector('[data-action="copy-fqdn"]').addEventListener('click', (e) => {
+                e.stopPropagation();
+                const sub = _cache.find(s => s.id === id);
+                if (sub) Utils.copyToClipboard(sub.fqdn, e.currentTarget);
             });
             item.querySelector('[data-action="view-key"]').addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -203,7 +248,7 @@ const SubdomainsModule = (() => {
                 <h3>Excluir subdomínio?</h3>
                 <p>Isso vai remover <span class="confirm-fqdn">${Utils.esc(sub.fqdn)}</span> e seu
                    registro DNS na Cloudflare. Essa ação não pode ser desfeita.</p>
-                <div style="display:flex; gap:var(--sp-3)">
+                <div style="">
                     <button class="action-btn btn-ghost" style="flex:1" id="confirm-delete-cancel">Cancelar</button>
                     <button class="action-btn btn-danger" style="flex:1" id="confirm-delete-ok">Excluir</button>
                 </div>

@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Lexend Deca", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.5;
@@ -26,28 +27,34 @@ a { color: var(--accent-color); }
 .hero h1 {
     font-size: var(--font-size-xxxl);
     font-weight: 800;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.05em;
 }
 .hero p {
     margin-top: var(--sp-3);
     color: var(--text-secondary);
-    font-size: var(--font-size-lg);
-    max-width: 640px;
+    font-size: var(--font-size-md);
     margin-inline: auto;
 }
 
 /* ============ BARRA DE CONTA ============ */
-.account-bar {
+.account-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--sp-4);
     flex-wrap: wrap;
     background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
     border-radius: var(--border-radius-size-lg);
     padding: var(--sp-4) var(--sp-5);
     margin-bottom: var(--sp-8);
+}
+.account-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .account-bar .account-info {
@@ -73,6 +80,13 @@ a { color: var(--accent-color); }
     display: flex;
     gap: var(--sp-3);
     flex-wrap: wrap;
+}
+
+.subdomain-group {
+    display: flex;
+    width: 100%;
+    border-top: 1px solid var(--border-color);
+    flex-direction: column;
 }
 
 .tools-row {
@@ -156,41 +170,58 @@ label {
 }
 
 .step {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-size-xl);
+    
 }
 
 .step-header {
     display: flex;
-    align-items: center;
-    gap: var(--sp-4);
     margin-bottom: var(--sp-5);
+    flex-direction: column;
 }
 
 .step-number {
-    flex: 0 0 auto;
-    width: 42px;
-    height: 64px;
-    border-radius: var(--border-radius-size-xl) 0 var(--border-radius-size-xl) 0;
-    background: var(--accent-color);
-    color: var(--text-accent-color);
+    display: none;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-mds);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    gap: 5px;
 }
 
 .step-title { font-size: var(--font-size-xl); font-weight: 700; }
 .step-desc { color: var(--text-secondary); font-size: var(--font-size-sm); margin-top: 2px; }
 
 .step-body {
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-size-xl);
     display: flex;
     flex-direction: column;
     gap: var(--sp-5);
-    padding: 0 var(--sp-5) var(--sp-5);
+    padding: var(--sp-5) var(--sp-5);
 }
+
+/* ============ BOTÕES DE ÍCONE (padrão) ============ */
+.icon-btn {
+    padding: var(--sp-2);
+    font-size: var(--font-size-mds);
+    min-width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: var(--border-radius-size-md);
+    transition: all .2s ease;
+}
+.icon-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    flex-shrink: 0;
+}
+.icon-btn.copied { background: var(--success-color); color: #fff; }
 
 /* ============ CARD DE FORM / REGISTRO ============ */
 .form-row {
@@ -223,6 +254,50 @@ label {
     white-space: nowrap;
 }
 
+.form-field .domain-suffix.domain-suffix-inline {
+    position: relative;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-size-md);
+    padding: 0 var(--sp-4);
+    cursor: text;
+}
+.form-field .domain-suffix.domain-suffix-inline:focus-within {
+    border-color: var(--accent-color);
+}
+.form-field .domain-suffix.domain-suffix-inline input {
+    border: none;
+    background: transparent;
+    padding: var(--sp-3) 0;
+    border-radius: 0;
+    flex: 0 1 auto;
+    width: 4ch;
+    min-width: 4ch;
+}
+.form-field .domain-suffix.domain-suffix-inline input:focus {
+    outline: none;
+    box-shadow: none;
+}
+.form-field .domain-suffix.domain-suffix-inline #domain-suffix-label {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: var(--font-size-md);
+    white-space: nowrap;
+    flex: 0 0 auto;
+    margin-left: -24px;
+}
+.input-mirror {
+    position: absolute;
+    top: 0; left: -9999px;
+    visibility: hidden;
+    white-space: pre;
+    font: inherit;
+}
+
 .hint { font-size: var(--font-size-mds); color: var(--text-tertiary); margin-top: var(--sp-2); }
 
 /* ============ LISTA DE SUBDOMÍNIOS ============ */
@@ -238,20 +313,19 @@ label {
     justify-content: space-between;
     gap: var(--sp-3);
     background: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    border: 1px solid transparent;
     border-radius: var(--border-radius-size-md);
-    padding: var(--sp-4);
+    padding: var(--sp-2) var(--sp-4);
     cursor: pointer;
     transition: border-color .2s, background .2s;
 }
 .sub-item:hover { border-color: var(--accent-color); }
 .sub-item.selected {
-    border-color: var(--accent-color);
     background: var(--bg-accent-color);
 }
 .sub-item .sub-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .sub-item .sub-fqdn { font-weight: 700; font-size: var(--font-size-md); font-family: monospace; word-break: break-all; }
-.sub-item .sub-meta { font-size: var(--font-size-sm); color: var(--text-primary); letter-spacing: -0.02rem; font-weight: 500; }
+.sub-item .sub-meta { font-size: var(--font-size-sm); color: var(--text-primary); letter-spacing: -0.02rem; font-weight: 300; }
 .sub-item .sub-actions { display: flex; gap: var(--sp-2); flex-shrink: 0; }
 
 .status-dot {
@@ -267,7 +341,7 @@ label {
     text-align: center;
     color: var(--text-tertiary);
     font-size: var(--font-size-sm);
-    padding: var(--sp-6) 0;
+    padding: var(--sp-3) 0;
 }
 
 /* ============ BLOCO DE CÓDIGO ============ */
@@ -287,7 +361,7 @@ label {
     border-bottom: 1px solid var(--code-border);
 }
 .code-block .code-label {
-    color: var(--text-primary);
+    color: var(--text-accent-color);
     font-size: var(--font-size-xs);
     text-transform: uppercase;
     letter-spacing: .04em;
@@ -328,13 +402,22 @@ label {
 }
 
 /* ============ TABS (sistema operacional / abas dentro de passo) ============ */
-.substeps { display: flex; flex-direction: column; gap: var(--sp-5); }
+.substeps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+}
+
 .substep {
-    border-left: 3px solid var(--border-color);
-    padding-left: var(--sp-4);
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-size-xl);
+    display: flex;
+    flex-direction: column;
+    padding: var(--sp-5) var(--sp-5);
 }
 .substep h4 {
     font-size: var(--font-size-md);
+    font-weight: 500;
     margin-bottom: var(--sp-2);
 }
 .substep p { font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--sp-2); }

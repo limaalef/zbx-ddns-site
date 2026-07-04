@@ -4,14 +4,14 @@
    ======================================== */
 :root {
     /* Backgrounds */
-    --bg-primary: #f5f4f0;
-    --bg-secondary: #eeece7;
-    --bg-tertiary: #dadbdd;
+    --bg-primary: #f1ecd8;
+    --bg-secondary: #dad3c4;
+    --bg-tertiary: #bebcad;
 
     /* Textos */
-    --text-primary: #1a1a18;
-    --text-secondary: #2e2e2c;
-    --text-tertiary: #a0a09a;
+    --text-primary: #36362a;
+    --text-secondary: #4e4e3e;
+    --text-tertiary: #7c7c60;
 
     /* Cores de Interface */
     --header-color: var(--bg-primary);
@@ -20,7 +20,7 @@
     --accent-color: #d40000;
     --accent-color-rgb: 59, 130, 246;
     --accent-hover: #e95858;
-    --bg-accent-color: #f7c9c9;
+    --bg-accent-color: #ffe6cb;
     --text-accent-color: #ffffff;
 
     /* Cores de Status */
@@ -125,17 +125,17 @@
 @media (prefers-color-scheme: dark) {
     :root {
         /* Backgrounds */
-        --bg-primary: #131313;
-        --bg-secondary: #1a1a1a;
-        --bg-tertiary: #363636;
+        --bg-primary: #130f0f;
+        --bg-secondary: #201c1c;
+        --bg-tertiary: #3a3434;
 
         /* Textos */
-        --text-primary: #e8e8e8;
-        --text-secondary: #aaaaaa;
+        --text-primary: #fffae0;
+        --text-secondary: #acaa9b;
         --text-tertiary: #757575;
 
         /* Interface */
-        --border-color: #333333;
+        --border-color: #4e4d44;
 
         --bg-accent-color: #4b0404;
         --text-accent-color: #ffffff;

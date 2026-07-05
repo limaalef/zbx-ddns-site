@@ -22,7 +22,7 @@ const SubdomainsModule = (() => {
 
     // ── Registro ──────────────────────────────────────────
     function initRegisterForm() {
-        document.getElementById('domain-suffix-label').textContent = `-${CONFIG.BASE_DOMAIN}`;
+        document.getElementById('domain-suffix-label').textContent = `.${CONFIG.BASE_DOMAIN}`;
 
         const input = document.getElementById('subdomain-label');
         const mirror = document.getElementById('subdomain-label-mirror');

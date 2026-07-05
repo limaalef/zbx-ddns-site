@@ -4,14 +4,14 @@
 //  subdomínio selecionado.
 // ============================================================
 const ScriptBuilderModule = (() => {
-
+    // Linux
     const INSTALL_DIR = '/etc/zbx-ddns-client';
     const SCRIPT_NAME = 'ddns_update.sh';
     const LOG_FILE    = `${INSTALL_DIR}/update.log`;
 
     function buildScript(sub) {
         const apiKey = sub?.apiKey || 'COLE_SUA_CHAVE_AQUI';
-        const fqdn   = sub?.fqdn   || 'SEU-ENDERECO-zbx-ddns.liamaalef.com';
+        const fqdn   = sub?.fqdn   || 'SEU-ENDERECO.zbx-ddns.com';
         const apiBase = CONFIG.API_BASE;
 
         return `#!/bin/bash

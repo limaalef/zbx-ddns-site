@@ -1,6 +1,6 @@
 // ============================================================
 //  AUTH MODULE — Login Google + sessão (JWT próprio do backend)
-//  Baseado no padrão de login usado em request.js (limaalef.com)
+//  Baseado no padrão de login usado em request.js
 // ============================================================
 const AuthModule = (() => {
 
